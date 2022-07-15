@@ -1,0 +1,24 @@
+{
+  "name": "swagger",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "client:deploy": "sls client deploy --no-config-change --no-policy-change --no-cors-change",
+    "client:deploy:nc": "npm run client:deploy -- --no-confirm",
+    "cloudfront:setup": "sls deploy",
+    "cloudfront:domainInfo": "sls domainInfo",
+    "cloudfront:invalidateCache": "sls invalidateCloudFrontCache",
+    "cloudfront:deploy": "npm run client:deploy && npm run cloudfront:invalidateCache",
+    "cloudfront:deploy:nc": "npm run client:deploy:nc && npm run cloudfront:invalidateCache",
+    "cloudfront:update:deploy": "npm run cloudfront:setup && npm run cloudfront:deploy",
+    "cloudfront:update:deploy:nc": "npm run cloudfront:setup && npm run cloudfront:deploy:nc",
+    "test": "react-scripts test"
+  },
+  "author": "dmitrii.sysoev1@epam.com",
+  "license": "ISC",
+  "devDependencies": {
+    "serverless": "^3.21.0",
+    "serverless-finch": "^4.0.0"
+  }
+}
