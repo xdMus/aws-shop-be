@@ -1,0 +1,68 @@
+import { Product } from './models/Product';
+
+export const mockProductList: Product[] = [
+	{
+		count: 4,
+		description: 'Short Product Description1',
+		id: '7567ec4b-b10c-48c5-9345-fc73c48a80aa',
+		price: 2.4,
+		title: 'First product',
+		imageUrl: 'https://source.unsplash.com/random?sig=1',
+	},
+	{
+		count: 6,
+		description: 'Short Product Description3',
+		id: '7567ec4b-b10c-48c5-9345-fc73c48a80a0',
+		price: 10,
+		title: 'Second product',
+		imageUrl: 'https://source.unsplash.com/random?sig=2',
+	},
+	{
+		count: 7,
+		description: 'Short Product Description2',
+		id: '7567ec4b-b10c-48c5-9345-fc73c48a80a2',
+		price: 23,
+		title: 'Third product',
+		imageUrl: 'https://source.unsplash.com/random?sig=3',
+	},
+	{
+		count: 12,
+		description: 'Short Product Description7',
+		id: '7567ec4b-b10c-48c5-9345-fc73c48a80a1',
+		price: 15,
+		title: 'Fourth product',
+		imageUrl: 'https://source.unsplash.com/random?sig=4',
+	},
+	{
+		count: 7,
+		description: 'Short Product Description2',
+		id: '7567ec4b-b10c-48c5-9345-fc73c48a80a3',
+		price: 23,
+		title: 'Fifth product',
+		imageUrl: 'https://source.unsplash.com/random?sig=5',
+	},
+	{
+		count: 8,
+		description: 'Short Product Description4',
+		id: '7567ec4b-b10c-48c5-9345-fc73348a80a1',
+		price: 15,
+		title: 'Sixth product',
+		imageUrl: 'https://source.unsplash.com/random?sig=6',
+	},
+	{
+		count: 2,
+		description: 'Short Product Descriptio1',
+		id: '7567ec4b-b10c-48c5-9445-fc73c48a80a2',
+		price: 23,
+		title: 'Seventh product',
+		imageUrl: 'https://source.unsplash.com/random?sig=7',
+	},
+	{
+		count: 3,
+		description: 'Short Product Description7',
+		id: '7567ec4b-b10c-45c5-9345-fc73c48a80a1',
+		price: 15,
+		title: 'Eighth product',
+		imageUrl: 'https://source.unsplash.com/random?sig=8',
+	},
+];
