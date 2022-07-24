@@ -19,7 +19,7 @@ export const createProduct = async ({ title, description, price, count }: Produc
 		await client.connect();
 
 		console.log(
-			`Executing ${DMLOperatorsEnum.INSERT} to 'products', 'stocks' tables values 
+			`Executing "${DMLOperatorsEnum.INSERT}" to 'products', 'stocks' tables values 
 			"${values[0]}", "${values[1]}", "${values[2]}", "${values[3]}"`,
 		);
 		await client.query(queryText, values);

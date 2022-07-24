@@ -1,4 +1,4 @@
-import { formatErrorResponse, formatOkResponse } from '../../utils/responseFormatters';
+import { formatBasicCustomResponse, formatErrorResponse } from '../../utils/responseFormatters';
 import { middyfy } from '../../utils/lambda';
 import { createProduct } from '../../services/products/createProduct';
 import { ProductDto } from '../../models/Product';
@@ -23,7 +23,7 @@ export const createProductHandler = async ({
 
 		await createProduct(productDto);
 
-		return formatOkResponse();
+		return formatBasicCustomResponse(201);
 	} catch (e) {
 		return formatErrorResponse(e);
 	}

@@ -71,7 +71,7 @@
     "/products/{productId}" : {
       "get" : {
         "tags" : [ "products" ],
-        "summary" : "adds an inventory item",
+        "summary" : "get product by id",
         "parameters" : [ {
           "name" : "productId",
           "in" : "path",
@@ -99,6 +99,32 @@
           },
           "404" : {
             "description" : "product was not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "products" ],
+        "summary" : "delete product by id",
+        "parameters" : [ {
+          "name" : "productId",
+          "in" : "path",
+          "description" : "product id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "operationId" : "deleteProductById",
+        "description" : "delete product by id",
+        "responses" : {
+          "204" : {
+            "description" : "product deleted"
+          },
+          "400" : {
+            "description" : "invalid product id"
+          },
+          "404" : {
+            "description" : "product does not exist"
           }
         }
       }

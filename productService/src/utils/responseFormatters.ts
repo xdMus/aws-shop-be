@@ -6,9 +6,9 @@ const headers = {
 	'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
 };
 
-export const formatOkResponse = () => {
+export const formatBasicCustomResponse = (statusCode: number) => {
 	return {
-		statusCode: 201,
+		statusCode,
 		headers,
 	};
 };

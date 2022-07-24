@@ -12,7 +12,7 @@ export const getProductById = async (productId: string): Promise<Product | undef
 	try {
 		await client.connect();
 		console.log(
-			`Executing ${DMLOperatorsEnum.SELECT} from 'products', 'stocks' tables with id ${productId}`,
+			`Executing "${DMLOperatorsEnum.SELECT}" from 'products', 'stocks' tables with id ${productId}`,
 		);
 
 		const { rows: products } = await client.query<Product>(queryText, values);

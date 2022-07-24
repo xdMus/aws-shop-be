@@ -11,7 +11,7 @@ export const getProductsList = async (): Promise<Product[] | null> => {
 
 	try {
 		await client.connect();
-		console.log(`Executing ${DMLOperatorsEnum.SELECT} from 'products', 'stocks' tables`);
+		console.log(`Executing "${DMLOperatorsEnum.SELECT}" from 'products', 'stocks' tables`);
 
 		const { rows: products } = await client.query<Product>(queryText);
 
