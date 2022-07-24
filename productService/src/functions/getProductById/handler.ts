@@ -3,30 +3,32 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { middyfy } from '../../utils/lambda';
 import { getProductById } from '../../services/products/getProductById';
 import { HTTPError } from '../../errors/http-error.class';
+import { validateProductId } from '../../utils/validators';
 
 export const getProductByIdHandler = async ({
 	pathParameters,
 }: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 	try {
 		const { productId } = pathParameters;
+		const error = validateProductId(productId, 'Product id is not correct');
 
-		if (!productId) {
-			throw new HTTPError(400, 'Product id is not correct');
+		if (error) {
+			return formatErrorResponse(new HTTPError(400, error, 'Validation'));
 		}
 
-		const product = await getProductById(productId);
+		try {
+			const product = await getProductById(productId);
 
-		if (!product) {
-			throw new HTTPError(404, 'Product not found');
+			if (!product) {
+				return formatErrorResponse(new HTTPError(404, 'Product not found', 'Database'));
+			}
+
+			return formatJSONResponse(200, product);
+		} catch (e) {
+			return formatErrorResponse(new HTTPError(400, e.message, 'Service'));
 		}
-
-		return formatJSONResponse({ ...product });
 	} catch (e) {
-		if (e instanceof HTTPError) {
-			return formatErrorResponse(e.statusCode, e.message);
-		}
-
-		return formatErrorResponse(500, e.message);
+		return formatErrorResponse(e);
 	}
 };
 
