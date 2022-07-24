@@ -1,0 +1,137 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "AWS shop BE",
+    "description": "This is a simple API",
+    "contact": {
+      "email": "dmitrii.sysoev1@epam.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://67rqgzjiaf.execute-api.eu-west-1.amazonaws.com/dev/",
+      "description": "AWS cloudfront"
+    }
+  ],
+  "tags": [
+    {
+      "name": "products",
+      "description": "Product service apis"
+    }
+  ],
+  "paths": {
+    "/products": {
+      "get": {
+        "tags": [
+          "products"
+        ],
+        "summary": "returns list of products",
+        "description": "By using this API you can get all products from database\n",
+        "operationId": "getProductsList",
+        "responses": {
+          "200": {
+            "description": "succesful products list response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/{productId}": {
+      "get": {
+        "tags": [
+          "products"
+        ],
+        "summary": "adds an inventory item",
+        "description": "get product by id",
+        "operationId": "getProductById",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "description": "product id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "product was found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid product id"
+          },
+          "404": {
+            "description": "product was not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Product": {
+        "required": [
+          "count",
+          "description",
+          "id",
+          "imageUrl",
+          "price",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "7567ec4b-b10c-45c5-9345-fc73c48a80a1"
+          },
+          "title": {
+            "type": "string",
+            "example": "Widget Adapter"
+          },
+          "description": {
+            "type": "string",
+            "example": "Some cool description"
+          },
+          "price": {
+            "type": "number",
+            "example": 15
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": "https/google.com"
+          },
+          "count": {
+            "type": "number",
+            "example": 7
+          }
+        }
+      }
+    }
+  }
+}
