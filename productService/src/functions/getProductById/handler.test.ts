@@ -11,7 +11,7 @@ describe('getProductByIdHandler', () => {
 
 		const mockEvent: APIGatewayProxyEvent = {
 			pathParameters: {
-				productId: '1234',
+				productId: '7567ec4b-b10c-48c5-9345-fc73c48a80aa',
 			},
 		} as any;
 
@@ -25,19 +25,6 @@ describe('getProductByIdHandler', () => {
 		(getProductById as jest.Mock).mockImplementationOnce(() => undefined);
 
 		const mockEvent: APIGatewayProxyEvent = {
-			pathParameters: {},
-		} as any;
-
-		const result = await getProductByIdHandler(mockEvent);
-
-		expect(result.statusCode).toEqual(400);
-		expect(JSON.parse(result.body).error.message).toEqual('Product id is not correct');
-	});
-
-	it('should return correct response if product was not found', async () => {
-		(getProductById as jest.Mock).mockImplementationOnce(() => undefined);
-
-		const mockEvent: APIGatewayProxyEvent = {
 			pathParameters: {
 				productId: '1234',
 			},
@@ -45,7 +32,22 @@ describe('getProductByIdHandler', () => {
 
 		const result = await getProductByIdHandler(mockEvent);
 
+		expect(result.statusCode).toEqual(400);
+		expect(JSON.parse(result.body).error.message).toEqual('Validation: Product id is not correct');
+	});
+
+	it('should return correct response if product was not found', async () => {
+		(getProductById as jest.Mock).mockImplementationOnce(() => undefined);
+
+		const mockEvent: APIGatewayProxyEvent = {
+			pathParameters: {
+				productId: '7567ec4b-b10c-48c5-9345-fc73c48a80aa',
+			},
+		} as any;
+
+		const result = await getProductByIdHandler(mockEvent);
+
 		expect(result.statusCode).toEqual(404);
-		expect(JSON.parse(result.body).error.message).toEqual('Product not found');
+		expect(JSON.parse(result.body).error.message).toEqual('Database: Product not found');
 	});
 });

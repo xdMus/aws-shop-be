@@ -2,6 +2,7 @@ import type { AWS } from '@serverless/typescript';
 
 import getProductsList from './src/functions/getProductsList';
 import getProductsById from './src/functions/getProductById';
+import createProduct from './src/functions/createProduct';
 
 const serverlessConfiguration: AWS = {
 	service: 'productservice',
@@ -16,19 +17,24 @@ const serverlessConfiguration: AWS = {
 			shouldStartNameWithService: true,
 		},
 		environment: {
+			PG_HOST: 'host',
+			PG_PORT: 'port',
+			PG_DATABASE: 'database name',
+			PG_USERNAME: 'username',
+			PG_PASSWORD: 'password',
 			AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
 			NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
 		},
 	},
 	// import the function via paths
-	functions: { getProductsList, getProductsById },
+	functions: { getProductsList, getProductsById, createProduct },
 	package: { individually: true },
 	custom: {
 		esbuild: {
 			bundle: true,
 			minify: true,
 			sourcemap: true,
-			exclude: ['aws-sdk'],
+			exclude: ['aws-sdk', 'pg-native'],
 			target: 'node14',
 			define: { 'require.resolve': undefined },
 			platform: 'node',
