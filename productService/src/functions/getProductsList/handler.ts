@@ -7,13 +7,14 @@ import { HTTPError } from '../../errors/http-error.class';
 export const getProductListHandler = async (): Promise<APIGatewayProxyResult> => {
 	try {
 		const productsList = await getProductsList();
-		return formatJSONResponse(productsList);
-	} catch (e) {
-		if (e instanceof HTTPError) {
-			return formatErrorResponse(e.statusCode, e.message);
+
+		if (!productsList) {
+			return formatErrorResponse(new HTTPError(404, 'Products not found', 'Database'));
 		}
 
-		return formatErrorResponse(500, `Failed to get products: ${e.message}`);
+		return formatJSONResponse(productsList);
+	} catch (e) {
+		return formatErrorResponse(e);
 	}
 };
 
