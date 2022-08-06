@@ -1,134 +1,222 @@
 {
-  "openapi": "3.0.0",
-  "info": {
-    "title": "AWS shop BE",
-    "description": "This is a simple API",
-    "contact": {
-      "email": "dmitrii.sysoev1@epam.com"
+  "openapi" : "3.0.0",
+  "servers" : [ {
+    "description" : "AWS cloudfront",
+    "url" : "https://67rqgzjiaf.execute-api.eu-west-1.amazonaws.com/dev/"
+  } ],
+  "info" : {
+    "description" : "This is a simple API",
+    "version" : "1.0.0",
+    "title" : "AWS shop BE",
+    "contact" : {
+      "email" : "dmitrii.sysoev1@epam.com"
     },
-    "license": {
-      "name": "Apache 2.0",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-    },
-    "version": "1.0.0"
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
   },
-  "servers": [
-    {
-      "url": "https://67rqgzjiaf.execute-api.eu-west-1.amazonaws.com/dev/",
-      "description": "AWS cloudfront"
-    }
-  ],
-  "tags": [
-    {
-      "name": "products",
-      "description": "Product service apis"
-    }
-  ],
-  "paths": {
-    "/products": {
-      "get": {
-        "tags": [
-          "products"
-        ],
-        "summary": "returns list of products",
-        "description": "By using this API you can get all products from database\n",
-        "operationId": "getProductsList",
-        "responses": {
-          "200": {
-            "description": "succesful products list response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Product"
+  "tags" : [ {
+    "name" : "products",
+    "description" : "Product service apis"
+  } ],
+  "paths" : {
+    "/products" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "returns list of products",
+        "operationId" : "getProductsList",
+        "description" : "By using this API you can get all products from database\n",
+        "responses" : {
+          "200" : {
+            "description" : "succesful products list response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Product"
                   }
                 }
               }
             }
           }
         }
-      }
-    },
-    "/products/{productId}": {
-      "get": {
-        "tags": [
-          "products"
-        ],
-        "summary": "adds an inventory item",
-        "description": "get product by id",
-        "operationId": "getProductById",
-        "parameters": [
-          {
-            "name": "productId",
-            "in": "path",
-            "description": "product id",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "product was found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Product"
+      },
+      "post" : {
+        "tags" : [ "products" ],
+        "summary" : "create product",
+        "operationId" : "createProduct",
+        "description" : "By using this API you can create product",
+        "responses" : {
+          "201" : {
+            "description" : "product created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Product"
                 }
               }
             }
           },
-          "400": {
-            "description": "invalid product id"
+          "400" : {
+            "description" : "invalid input, object invalid"
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ProductDTO"
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "products" ],
+        "summary" : "update product",
+        "operationId" : "updateProduct",
+        "description" : "By using this API you can update product",
+        "responses" : {
+          "200" : {
+            "description" : "product updated",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Product"
+                }
+              }
+            }
           },
-          "404": {
-            "description": "product was not found"
+          "400" : {
+            "description" : "invalid input, object invalid"
+          },
+          "404" : {
+            "description" : "product does not exist"
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Product"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/{productId}" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "get product by id",
+        "parameters" : [ {
+          "name" : "productId",
+          "in" : "path",
+          "description" : "product id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "operationId" : "getProductById",
+        "description" : "get product by id",
+        "responses" : {
+          "200" : {
+            "description" : "product was found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "invalid product id"
+          },
+          "404" : {
+            "description" : "product was not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "products" ],
+        "summary" : "delete product by id",
+        "parameters" : [ {
+          "name" : "productId",
+          "in" : "path",
+          "description" : "product id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "operationId" : "deleteProductById",
+        "description" : "delete product by id",
+        "responses" : {
+          "204" : {
+            "description" : "product deleted"
+          },
+          "400" : {
+            "description" : "invalid product id"
+          },
+          "404" : {
+            "description" : "product does not exist"
           }
         }
       }
     }
   },
-  "components": {
-    "schemas": {
-      "Product": {
-        "required": [
-          "count",
-          "description",
-          "id",
-          "imageUrl",
-          "price",
-          "title"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "7567ec4b-b10c-45c5-9345-fc73c48a80a1"
+  "components" : {
+    "schemas" : {
+      "Product" : {
+        "type" : "object",
+        "required" : [ "id", "title", "description", "price", "count" ],
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid",
+            "example" : "7567ec4b-b10c-45c5-9345-fc73c48a80a1"
           },
-          "title": {
-            "type": "string",
-            "example": "Widget Adapter"
+          "title" : {
+            "type" : "string",
+            "example" : "string"
           },
-          "description": {
-            "type": "string",
-            "example": "Some cool description"
+          "description" : {
+            "type" : "string",
+            "example" : "string"
           },
-          "price": {
-            "type": "number",
-            "example": 15
+          "price" : {
+            "type" : "number",
+            "example" : 15
           },
-          "imageUrl": {
-            "type": "string",
-            "example": "https/google.com"
+          "count" : {
+            "type" : "number",
+            "example" : 7
+          }
+        }
+      },
+      "ProductDTO" : {
+        "type" : "object",
+        "required" : [ "title", "description", "price", "count" ],
+        "properties" : {
+          "title" : {
+            "type" : "string",
+            "example" : "string"
           },
-          "count": {
-            "type": "number",
-            "example": 7
+          "description" : {
+            "type" : "string",
+            "example" : "string"
+          },
+          "price" : {
+            "type" : "number",
+            "example" : 10
+          },
+          "count" : {
+            "type" : "number",
+            "example" : 1
           }
         }
       }
