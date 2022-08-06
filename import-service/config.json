@@ -1,0 +1,6 @@
+{
+  "BUCKET_NAME": "aws-shop-products-csv",
+  "REGION": "eu-west-1",
+  "UPLOAD_FOLDER_NAME": "uploaded",
+  "EXPIRATION_TIME": 60
+}
