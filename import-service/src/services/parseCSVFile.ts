@@ -12,7 +12,10 @@ export const parseCSVFile = async (s3: S3, params: { Bucket: string; Key: string
 		const s3stream = s3.getObject(params).createReadStream().pipe(csvParser());
 
 		s3stream
-			.on('data', (data) => logger.log(JSON.stringify(data)))
+			.on('data', (data) => {
+				parsedFiles.push(data);
+				logger.log(JSON.stringify(data));
+			})
 			.on('error', () => {
 				logger.error('Parsing error');
 				return reject('Parsing error');
