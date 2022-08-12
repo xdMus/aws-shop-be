@@ -16,6 +16,7 @@
 	"dependencies": {
 		"@middy/core": "^2.5.3",
 		"@middy/http-json-body-parser": "^2.5.3",
+		"joi": "^17.6.0",
 		"pg": "^8.7.3",
 		"validator": "^13.7.0"
 	},

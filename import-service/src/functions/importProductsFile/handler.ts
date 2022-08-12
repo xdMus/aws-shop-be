@@ -11,6 +11,11 @@ export const importProductsFileHandler = async ({
 }: ValidatedAPIGatewayProxyEvent<typeof schema>): Promise<APIGatewayProxyStructuredResultV2> => {
 	try {
 		const { name } = queryStringParameters;
+
+		if (!name) {
+			return formatErrorResponse(new HTTPError(400, 'Filename should be provided', 'Validation'));
+		}
+
 		try {
 			const signedUrl = await getSignedUrl(name);
 

@@ -3,10 +3,11 @@ import { formatErrorResponse, formatJSONResponse } from '../../utils/responseFor
 import { HTTPError } from '../../errors/http-error.class';
 import { middyfy } from '../../utils/lambda';
 import { parseCSVFile } from '../../services/parseCSVFile';
-import { S3 } from 'aws-sdk';
+import { S3, SQS } from 'aws-sdk';
 import config from '../../../config.json';
 import { copyToParsedFolder } from '../../services/copyToParsedFolder';
 import { deleteParsedFile } from '../../services/deleteParsedFile';
+import { sendSQSMessage } from '../../services/sendSQSMessage';
 
 export const importFileParser = async (
 	event: S3Event,
@@ -14,6 +15,7 @@ export const importFileParser = async (
 	try {
 		try {
 			const s3 = new S3({ region: config.REGION });
+			const sqs = new SQS({ region: config.REGION });
 
 			const fileRecords = event.Records.filter((record) => !!record.s3.object.size);
 
@@ -30,6 +32,7 @@ export const importFileParser = async (
 					await deleteParsedFile(s3, params);
 				}
 
+				await sendSQSMessage(sqs, parsedFiles);
 				return parsedFiles;
 			});
 
