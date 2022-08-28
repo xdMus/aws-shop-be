@@ -1,0 +1,28 @@
+{
+  "name": "bff-service",
+  "version": "1.0.0",
+  "description": "bff for aws shop",
+  "main": "index.js",
+  "scripts": {
+    "app-dev": "nodemon index.js",
+    "eb-init": "eb init xdmus-bff-api --platform node.js --region eu-west-1",
+    "eb-create": "eb create bff-develop --single --cname xdmus-bff-api-develop",
+    "eb-deploy": "eb deploy",
+    "eb-terminate": "eb terminate",
+    "start": "node index.js",
+    "set-env": "eb setenv `cat .env.eb | sed '/^#/ d' | sed '/^$/ d'`"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "moment": "^2.29.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
